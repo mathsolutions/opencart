@@ -646,7 +646,7 @@ class Returns extends \Opencart\System\Engine\Controller {
 		$order_info = $this->model_sale_order->getOrder($post_info['order_id']);
 
 		if (!$order_info) {
-			$json['error']['order'] = $this->language->get('error_order_id');
+			$json['error']['order'] = $this->language->get('error_order');
 		}
 
 		if ($post_info['customer_id']) {
