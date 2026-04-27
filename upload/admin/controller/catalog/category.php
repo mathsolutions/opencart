@@ -281,6 +281,8 @@ class Category extends \Opencart\System\Engine\Controller {
 		$data['save'] = $this->url->link('catalog/category.save', 'user_token=' . $this->session->data['user_token']);
 		$data['back'] = $this->url->link('catalog/category', 'user_token=' . $this->session->data['user_token'] . $url);
 
+		$category_info = [];
+
 		if (isset($this->request->get['category_id'])) {
 			$this->load->model('catalog/category');
 
@@ -590,7 +592,7 @@ class Category extends \Opencart\System\Engine\Controller {
 			$filter_name = '';
 		}
 
-		if (isset($this->request->get['filter_status']) && $this->request->get['filter_status'] =! '') {
+		if (isset($this->request->get['filter_status']) && $this->request->get['filter_status'] !== '') {
 			$filter_status = $this->request->get['filter_status'];
 		} else {
 			$filter_status = '';

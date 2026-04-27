@@ -1312,7 +1312,7 @@ class Product extends \Opencart\System\Engine\Controller {
 			$this->load->model('catalog/product');
 
 			foreach ($selected as $product_id) {
-				$this->model_catalog_product->deleteProduct($product_id);
+				$this->model_catalog_product->deleteProduct((int)$product_id);
 			}
 
 			$json['success'] = $this->language->get('text_success');
@@ -1346,7 +1346,7 @@ class Product extends \Opencart\System\Engine\Controller {
 			$this->load->model('catalog/product');
 
 			foreach ($selected as $product_id) {
-				$this->model_catalog_product->copyProduct($product_id);
+				$this->model_catalog_product->copyProduct((int)$product_id);
 			}
 
 			$json['success'] = $this->language->get('text_success');
