@@ -5,7 +5,7 @@ import { loader } from '../index.js';
 const session = loader.library('session');
 
 // Language
-const language = loader.language('account/password');
+const language = await loader.language('account/password');
 
 export default class extends Controller {
     render() {
@@ -16,9 +16,6 @@ export default class extends Controller {
 
     onSubmit(e) {
         e.preventDefault();
-
-
-
 
     }
 }
