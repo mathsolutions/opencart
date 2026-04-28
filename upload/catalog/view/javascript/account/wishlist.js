@@ -2,10 +2,10 @@ import { Controller } from '../component.js';
 import { loader } from '../index.js';
 
 // Library
-const session = loader.library('session');
-
+const session = await loader.library('session');
+console.log(session);
 // Language
-const language = loader.language('account/edit');
+const language = await loader.language('account/edit');
 
 export default class extends Controller {
     render() {
