@@ -24,15 +24,9 @@ customElements.define('x-include', class extends WebComponent {
 
         let controller = await import(config.config_path + this.src + '.js');
 
-        console.log(controller);
-
         let object = new controller.default();
 
-        console.log(object);
-
         let output = await object.render();
-
-        console.log(output);
 
         //new URLSearchParams
 
