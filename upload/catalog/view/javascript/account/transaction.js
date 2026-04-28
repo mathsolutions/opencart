@@ -2,10 +2,12 @@ import { Controller } from '../component.js';
 import { loader } from '../index.js';
 
 // Language
-const language = loader.language('account/transaction');
+const language = await loader.language('account/transaction');
 
 export default class extends Controller {
     render() {
+
+
         return loader.template('account/transaction', { ...language });
     }
 }
