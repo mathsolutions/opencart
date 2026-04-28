@@ -25,7 +25,7 @@ export class WebComponent extends HTMLElement {
             this.innerHTML = output;
 
             // Attach Events based on elements that have data-bind and data-on attributes
-            let elements = this.querySelectorAll('[data-bind], [data-on]');
+            let elements = this.querySelectorAll('[data-bind]');
 
             for (let element of elements) {
                 // Binds the element to an attribute by name.
@@ -34,8 +34,24 @@ export class WebComponent extends HTMLElement {
 
                     element.removeAttribute('data-bind');
                 }
+            }
 
-                if (element.hasAttribute('data-on')) {
+            elements = this.querySelectorAll('[data-on]');
+
+            for (let element of elements) {
+                let part = element.getAttribute('data-on').split(':');
+
+                if (part[1] !== undefined && part[1] in this) {
+                    element.addEventListener(part[0], this[part[1]].bind(this));
+
+                    element.removeAttribute('data-on');
+                }
+            }
+
+            elements = this.querySelectorAll('a[data-target]');
+
+            for (let element of elements) {
+                if (element.hasAttribute('data-target')) {
                     let part = element.getAttribute('data-on').split(':');
 
                     if (part[1] !== undefined && part[1] in this) {
