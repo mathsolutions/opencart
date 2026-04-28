@@ -14,10 +14,6 @@ const language = await loader.language('information/contact');
 const locations = await loader.storage('information/location');
 
 export default class extends Controller {
-    async connected() {
-
-    }
-
     async render() {
         let data = {};
 
