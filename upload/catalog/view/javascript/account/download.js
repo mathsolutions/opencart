@@ -1,7 +1,7 @@
 import { Controller } from '../component.js';
 import { loader } from '../index.js';
 
-const language = loader.language('account/download');
+const language = await loader.language('account/download');
 
 export default class extends Controller {
     render() {
@@ -9,6 +9,6 @@ export default class extends Controller {
 
         data.downloads = {};
 
-        return this.load.template('account/download', { ...data, ...language });
+        return loader.template('account/download', { ...data, ...language });
     }
 }
