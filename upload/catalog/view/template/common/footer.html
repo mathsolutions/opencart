@@ -8,7 +8,7 @@
             <li><x-link href="cms/topic" target="content">{{ text_blog }}</x-link></li>
           {% endif %}
           {% for information in informations %}
-            <li><a href="information/information-{{ information.information_id }}" target="content">{{ information.title }}</a></li>
+            <li><x-link href="information/information-{{ information.information_id }}" target="content">{{ information.title }}</x-link></li>
           {% endfor %}
         </ul>
       </div>
