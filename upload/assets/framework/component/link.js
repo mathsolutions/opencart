@@ -29,7 +29,7 @@ customElements.define('x-link', class extends WebComponent {
     }
 
     render() {
-        return '<a href="' + this.href + '" data-on="click:onClick">' + this.text + '</a>';
+        return '<a href="' + this.href + '" ' + (this.hasAttribute('input-id') ? ' id=' + this.getAttribute('input-id') : '') + ' ' + (this.hasAttribute('input-class') ? ' class=' + this.getAttribute('input-class') : '') + ' data-on="click:onClick">' + this.text + '</a>';
     }
 
     onClick(e) {
