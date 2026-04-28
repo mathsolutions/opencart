@@ -1,3 +1,10 @@
+
+
+
+
+
+
+
 var product_row = 0;
 
 $('form').on('submit', function(e) {
