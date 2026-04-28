@@ -102,27 +102,27 @@ customElements.define('x-pagination', class extends WebComponent {
             html += '<ul class="pagination">';
 
             if (first) {
-                html += '<li class="page-item"><a href="' + first +'" data-on="click:click" class="page-link">|&lt;</a></li>';
+                html += '<li class="page-item"><a href="' + first +'" data-on="click:onClick" class="page-link">|&lt;</a></li>';
             }
 
             if (prev) {
-                html += '<li class="page-item"><a href="' + prev + '" data-on="click:click" class="page-link">&lt;</a></li>';
+                html += '<li class="page-item"><a href="' + prev + '" data-on="click:onClick" class="page-link">&lt;</a></li>';
             }
 
             for (let i = start; i <= end; i++) {
                 if (i == this.page) {
                     html += '<li class="page-item active"><span class="page-link">' + i + '</span></li>';
                 } else {
-                    html += '<li class="page-item"><a href="' + this.href.replace('{page}', i) + '" data-on="click:click" class="page-link">' + i + '</a></li>';
+                    html += '<li class="page-item"><a href="' + this.href.replace('{page}', i) + '" data-on="click:onClick" class="page-link">' + i + '</a></li>';
                 }
             }
 
             if (next) {
-                html += '<li class="page-item"><a href="' + next + '" data-on="click:click" class="page-link">&gt;</a></li>';
+                html += '<li class="page-item"><a href="' + next + '" data-on="click:onClick" class="page-link">&gt;</a></li>';
             }
 
             if (last) {
-                html += '<li class="page-item"><a href="' + last + '" data-on="click:click" class="page-link">&gt;|</a></li>';
+                html += '<li class="page-item"><a href="' + last + '" data-on="click:onClick" class="page-link">&gt;|</a></li>';
             }
 
             html += '</ul>';
@@ -131,23 +131,11 @@ customElements.define('x-pagination', class extends WebComponent {
         return html;
     }
 
-    async click(e) {
+    async onClick(e) {
         e.preventDefault();
 
-        this.fetch(e.target.getAttribute('href')).then(this.onload.bind(this));
-    }
+        let target = document.getElementById(this.target);
 
-    async fetch(url) {
-        let response = await fetch(url);
-
-        if (response.status == 200) {
-            return response.text();
-        }
-    }
-
-    onload(html) {
-        let element = document.querySelector(this.target);
-
-        element.innerHTML = html;
+        target.src = this.href;
     }
 });
