@@ -11,7 +11,7 @@ export default class extends Controller {
     async render() {
 
 
-        return
+        return '';
     }
 }
 
