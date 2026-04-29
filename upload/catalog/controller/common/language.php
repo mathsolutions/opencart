@@ -99,7 +99,11 @@ class Language extends \Opencart\System\Engine\Controller {
 				// Build the url
 				$url_info = parse_url($redirect);
 
-				parse_str($url_info['query'], $query);
+				$query = [];
+
+				if (!empty($url_info['query'])) {
+					parse_str($url_info['query'], $query);
+				}
 
 				if (isset($query['route'])) {
 					$route = $query['route'];

@@ -659,7 +659,7 @@ class Order extends \Opencart\System\Engine\Controller {
 
 			$output['points'] = $points;
 
-			if (isset($order_data['affiliate_id'])) {
+			if (!empty($order_data['affiliate_id'])) {
 				$output['commission'] = $this->currency->format($order_data['commission'], $this->config->get('config_currency'));
 			}
 		}
