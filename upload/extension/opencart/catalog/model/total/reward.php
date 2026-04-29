@@ -34,12 +34,10 @@ class Reward extends \Opencart\System\Engine\Model {
 					}
 				}
 
-				$points = min($points, $points_total);
-
 				foreach ($this->cart->getProducts() as $product) {
 					$discount = 0;
 
-					if ($product['points']) {
+					if ($product['points'] && $points_total) {
 						$discount = $product['total'] * ($this->session->data['reward'] / $points_total);
 
 						if ($product['tax_class_id']) {
@@ -47,7 +45,13 @@ class Reward extends \Opencart\System\Engine\Model {
 
 							foreach ($tax_rates as $tax_rate) {
 								if ($tax_rate['type'] == 'P') {
-									$taxes[(int)$tax_rate['tax_rate_id']] -= (float)$tax_rate['amount'];
+									$tax_id = (int)$tax_rate['tax_rate_id'];
+
+									if (!isset($taxes[$tax_id])) {
+										$taxes[$tax_id] = 0;
+									}
+
+									$taxes[$tax_id] -= (float)$tax_rate['amount'];
 								}
 							}
 						}
