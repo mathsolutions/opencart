@@ -194,12 +194,15 @@ class Order extends \Opencart\System\Engine\Model {
 	 * $this->model_checkout_order->editOrder($order_id, $order_data);
 	 */
 	public function editOrder(int $order_id, array $data): void {
-		// 1. Void the order first
-		$this->addHistory($order_id, (int)$this->config->get('config_void_status_id'));
-
 		$order_info = $this->getOrder($order_id);
 
 		if ($order_info) {
+
+			// 1. Void the order first if it has already been confirmed
+			if ($order_info['order_status_id']) {
+				$this->addHistory($order_id, (int)$this->config->get('config_void_status_id'), '', true);
+			}
+
 			// 2. Merge the old order data with the new data
 			foreach ($order_info as $key => $value) {
 				if (!isset($data[$key])) {
@@ -314,12 +317,12 @@ class Order extends \Opencart\System\Engine\Model {
 		$this->model_checkout_order->deleteTotals($order_id);
 		$this->model_checkout_order->deleteHistories($order_id);
 
-		// Transaction
+		// Transactions
 		$this->load->model('account/transaction');
 
 		$this->model_account_transaction->deleteTransactionsByOrderId($order_id);
 
-		// Reward
+		// Rewards
 		$this->load->model('account/reward');
 
 		$this->model_account_reward->deleteRewardsByOrderId($order_id);
@@ -509,7 +512,7 @@ class Order extends \Opencart\System\Engine\Model {
 	 * @param int                  $order_product_id primary key of the order product record
 	 * @param array<string, mixed> $data             array of data
 	 *
-	 * @return void
+	 * @return int
 	 *
 	 * @example
 	 *
@@ -525,8 +528,10 @@ class Order extends \Opencart\System\Engine\Model {
 	 *
 	 * $this->model_checkout_order->addOption($order_id, $order_product_id, $order_option_data);
 	 */
-	public function addOption(int $order_id, int $order_product_id, array $data): void {
+	public function addOption(int $order_id, int $order_product_id, array $data): int {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "order_option` SET `order_id` = '" . (int)$order_id . "', `order_product_id` = '" . (int)$order_product_id . "', `product_option_id` = '" . (int)$data['product_option_id'] . "', `product_option_value_id` = '" . (int)$data['product_option_value_id'] . "', `name` = '" . $this->db->escape($data['name']) . "', `value` = '" . $this->db->escape($data['value']) . "', `type` = '" . $this->db->escape($data['type']) . "'");
+
+		return $this->db->getLastId();
 	}
 
 	/**
@@ -579,7 +584,7 @@ class Order extends \Opencart\System\Engine\Model {
 	 * @param int                  $order_product_id primary key of the order product record
 	 * @param array<string, mixed> $data             array of data
 	 *
-	 * @return void
+	 * @return int
 	 *
 	 * @example
 	 *
@@ -603,8 +608,10 @@ class Order extends \Opencart\System\Engine\Model {
 	 *
 	 * $this->model_checkout_order->addSubscription($order_id, $order_product_id, $order_subscription_data);
 	 */
-	public function addSubscription(int $order_id, int $order_product_id, array $data): void {
+	public function addSubscription(int $order_id, int $order_product_id, array $data): int {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "order_subscription` SET `order_product_id` = '" . (int)$order_product_id . "', `order_id` = '" . (int)$order_id . "', `product_id` = '" . (int)$data['product_id'] . "', `subscription_plan_id` = '" . (int)$data['subscription_plan_id'] . "', `trial_price` = '" . (float)$data['trial_price'] . "', `trial_tax` = '" . (float)$data['trial_tax'] . "', `trial_frequency` = '" . $this->db->escape($data['trial_frequency']) . "', `trial_cycle` = '" . (int)$data['trial_cycle'] . "', `trial_duration` = '" . (int)$data['trial_duration'] . "', `trial_status` = '" . (int)$data['trial_status'] . "', `price` = '" . (float)$data['price'] . "', `tax` = '" . (float)$data['tax'] . "', `frequency` = '" . $this->db->escape($data['frequency']) . "', `cycle` = '" . (int)$data['cycle'] . "', `duration` = '" . (int)$data['duration'] . "'");
+
+		return $this->db->getLastId();
 	}
 
 	/**
@@ -698,7 +705,7 @@ class Order extends \Opencart\System\Engine\Model {
 	 * @param int                  $order_id primary key of the order record
 	 * @param array<string, mixed> $data     array of data
 	 *
-	 * @return void
+	 * @return int
 	 *
 	 * @example
 	 *
@@ -714,8 +721,10 @@ class Order extends \Opencart\System\Engine\Model {
 	 *
 	 * $this->model_checkout_order->addTotal($order_id, $order_total_data);
 	 */
-	public function addTotal(int $order_id, array $data): void {
+	public function addTotal(int $order_id, array $data): int {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "order_total` SET `order_id` = '" . (int)$order_id . "', `extension` = '" . $this->db->escape($data['extension']) . "', `code` = '" . $this->db->escape($data['code']) . "', `title` = '" . $this->db->escape($data['title']) . "', `value` = '" . (float)$data['value'] . "', `sort_order` = '" . (int)$data['sort_order'] . "'");
+
+		return $this->db->getLastId();
 	}
 
 	/**
@@ -769,7 +778,7 @@ class Order extends \Opencart\System\Engine\Model {
 	 * @param bool   $notify
 	 * @param bool   $override
 	 *
-	 * @return void
+	 * @return int
 	 *
 	 * @example
 	 *
@@ -777,7 +786,9 @@ class Order extends \Opencart\System\Engine\Model {
 	 *
 	 * $this->model_checkout_order->addHistory($order_id, $order_status_id, $comment, $notify, $override);
 	 */
-	public function addHistory(int $order_id, int $order_status_id, string $comment = '', bool $notify = false, bool $override = false): void {
+	public function addHistory(int $order_id, int $order_status_id, string $comment = '', bool $notify = false, bool $override = false): int {
+		$order_history_id = 0;
+
 		$order_info = $this->model_checkout_order->getOrder($order_id);
 
 		if ($order_info) {
@@ -901,7 +912,8 @@ class Order extends \Opencart\System\Engine\Model {
 						'tax'                  => array_sum(array_column($subscription_product_data, 'tax')),
 						'subscription_product' => $subscription_product_data,
 						'language'             => $order_info['language_code'],
-						'currency'             => $order_info['currency_code']
+						'currency_code'        => $order_info['currency_code'],
+						'currency_value'       => $order_info['currency_value']
 					] + $order_info + $order_subscription;
 
 					$subscription_info = $this->model_checkout_subscription->getProductByOrderProductId($order_id, $order_subscription['order_product_id']);
@@ -977,8 +989,12 @@ class Order extends \Opencart\System\Engine\Model {
 
 			$this->db->query("INSERT INTO `" . DB_PREFIX . "order_history` SET `order_id` = '" . (int)$order_id . "', `order_status_id` = '" . (int)$order_status_id . "', `notify` = '" . (int)$notify . "', `comment` = '" . $this->db->escape($comment) . "', `date_added` = NOW()");
 
+			$order_history_id = $this->db->getLastId();
+
 			$this->cache->delete('product');
 		}
+
+		return $order_history_id;
 	}
 
 	/**
