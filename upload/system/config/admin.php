@@ -15,8 +15,9 @@ $_['db_port']           = DB_PORT;
 //$_['db_ssl_ca']         = DB_SSL_CA;
 
 // Cache
-$_['cache_engine']         = CACHE_ENGINE; // apc, file, mem, memcached or redis
-$_['cache_expire']         = 3600;
+if (defined('CACHE_ENGINE')) {
+	$_['cache_engine'] = CACHE_ENGINE;
+}
 
 // Session
 $_['session_autostart'] = false;
