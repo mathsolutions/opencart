@@ -48,7 +48,7 @@ class Reward extends \Opencart\System\Engine\Model {
 									$tax_id = (int)$tax_rate['tax_rate_id'];
 
 									if (!isset($taxes[$tax_id])) {
-										$taxes[$tax_id] = 0;
+										$taxes[$tax_id] = 0.0;
 									}
 
 									$taxes[$tax_id] -= (float)$tax_rate['amount'];
