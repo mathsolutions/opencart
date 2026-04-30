@@ -65,15 +65,7 @@ class Developer extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			$files = glob(DIR_CACHE . 'cache.*');
-
-			if ($files) {
-				foreach ($files as $file) {
-					if (is_file($file)) {
-						unlink($file);
-					}
-				}
-			}
+			$this->cache->clear();
 
 			$json['success'] = $this->language->get('text_cache_success');
 		}
