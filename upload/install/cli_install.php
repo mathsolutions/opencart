@@ -493,7 +493,7 @@ class CliInstall extends \Opencart\System\Engine\Controller {
 		}
 
 		if ($option['db_ssl_ca']) {
-			$output .= 'define(\'DB_SSL_CA\', \'' . addslashes($option['db_ssl_ca']) . '\');'  . PHP_EOL . PHP_EOL;
+			$output .= 'define(\'DB_SSL_CA\', \'' . addslashes($option['db_ssl_ca']) . '\');' . PHP_EOL . PHP_EOL;
 		}
 
 		$output .= "// Cache" . PHP_EOL;
