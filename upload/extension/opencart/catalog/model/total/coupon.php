@@ -68,7 +68,13 @@ class Coupon extends \Opencart\System\Engine\Model {
 
 							foreach ($tax_rates as $tax_rate) {
 								if ($tax_rate['type'] == 'P') {
-									$taxes[(int)$tax_rate['tax_rate_id']] -= (float)$tax_rate['amount'];
+									$tax_id = (int)$tax_rate['tax_rate_id'];
+
+									if (!isset($taxes[$tax_id])) {
+										$taxes[$tax_id] = 0.0;
+									}
+
+									$taxes[$tax_id] -= (float)$tax_rate['amount'];
 								}
 							}
 						}
@@ -83,7 +89,13 @@ class Coupon extends \Opencart\System\Engine\Model {
 
 						foreach ($tax_rates as $tax_rate) {
 							if ($tax_rate['type'] == 'P') {
-								$taxes[(int)$tax_rate['tax_rate_id']] -= (float)$tax_rate['amount'];
+								$tax_id = (int)$tax_rate['tax_rate_id'];
+
+								if (!isset($taxes[$tax_id])) {
+									$taxes[$tax_id] = 0.0;
+								}
+
+								$taxes[$tax_id] -= (float)$tax_rate['amount'];
 							}
 						}
 					}

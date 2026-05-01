@@ -249,7 +249,7 @@ class Register extends \Opencart\System\Engine\Controller {
 			if ($post_info['customer_group_id']) {
 				$customer_group_id = (int)$post_info['customer_group_id'];
 			} else {
-				$customer_group_id = (int)$post_info('config_customer_group_id');
+				$customer_group_id = (int)$this->config->get('config_customer_group_id');
 			}
 
 			$this->load->model('account/customer_group');

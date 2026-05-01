@@ -120,15 +120,18 @@ class Transaction extends \Opencart\System\Engine\Model {
 		}
 
 		if (isset($data['start']) || isset($data['limit'])) {
-			if ($data['start'] < 0) {
-				$data['start'] = 0;
+			$start = isset($data['start']) ? (int)$data['start'] : 0;
+			$limit = isset($data['limit']) ? (int)$data['limit'] : 20;
+
+			if ($start < 0) {
+				$start = 0;
 			}
 
-			if ($data['limit'] < 1) {
-				$data['limit'] = 20;
+			if ($limit < 1) {
+				$limit = 20;
 			}
 
-			$sql .= " LIMIT " . (int)$data['start'] . "," . (int)$data['limit'];
+			$sql .= " LIMIT " . $start . "," . $limit;
 		}
 
 		$query = $this->db->query($sql);
@@ -195,9 +198,9 @@ class Transaction extends \Opencart\System\Engine\Model {
 		$query = $this->db->query("SELECT SUM(`amount`) AS `total` FROM `" . DB_PREFIX . "customer_transaction` WHERE `customer_id` = '" . (int)$customer_id . "' GROUP BY `customer_id`");
 
 		if ($query->num_rows) {
-			return (int)$query->row['total'];
+			return (float)$query->row['total'];
 		} else {
-			return 0;
+			return 0.0;
 		}
 	}
 }

@@ -6,7 +6,7 @@ function getURLVar(key) {
     if (query[1]) {
         var part = query[1].split('&');
 
-        for (i = 0; i < part.length; i++) {
+        for (var i = 0; i < part.length; i++) {
             var data = part[i].split('=');
 
             if (data[0] && data[1]) {
@@ -25,7 +25,7 @@ function getURLVar(key) {
 // Observe
 +function($) {
     $.fn.observe = function(callback) {
-        observer = new MutationObserver(callback);
+        var observer = new MutationObserver(callback);
 
         observer.observe($(this)[0], {
             characterData: false,
@@ -39,7 +39,7 @@ $(document).ready(function() {
     // Tooltip
     var oc_tooltip = function() {
         // Get tooltip instance
-        tooltip = bootstrap.Tooltip.getInstance(this);
+        var tooltip = bootstrap.Tooltip.getInstance(this);
 
         if (!tooltip) {
             // Apply to current element
@@ -98,17 +98,9 @@ $(document).on('submit', 'form', function (e) {
         var method = $(button).attr('formmethod') || $(form).attr('method') || 'post';
         var enctype = $(button).attr('formenctype') || $(form).attr('enctype') || 'application/x-www-form-urlencoded';
 
-        console.log(e);
-        console.log(element);
-        console.log('action ' + action);
-        console.log('button ' + button);
-        console.log('method ' + method);
-        console.log('enctype ' + enctype);
-        console.log($(element).serialize());
-
         // https://github.com/opencart/opencart/issues/9690
         if (typeof CKEDITOR != 'undefined') {
-            for (instance in CKEDITOR.instances) {
+            for (var instance in CKEDITOR.instances) {
                 CKEDITOR.instances[instance].updateElement();
             }
         }
@@ -126,9 +118,6 @@ $(document).on('submit', 'form', function (e) {
                 $(button).button('reset');
             },
             success: function (json, textStatus) {
-                console.log(json);
-                console.log(textStatus);
-
                 $('.alert-dismissible').remove();
                 $(element).find('.is-invalid').removeClass('is-invalid');
                 $(element).find('.invalid-feedback').removeClass('d-block');
@@ -146,7 +135,7 @@ $(document).on('submit', 'form', function (e) {
                         $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error']['warning'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
                     }
 
-                    for (key in json['error']) {
+                    for (var key in json['error']) {
                         $('#input-' + key.replaceAll('_', '-')).addClass('is-invalid').find('.form-control, .form-select, .form-check-input, .form-check-label').addClass('is-invalid');
                         $('#error-' + key.replaceAll('_', '-')).html(json['error'][key]).addClass('d-block');
                     }
@@ -165,7 +154,7 @@ $(document).on('submit', 'form', function (e) {
                 }
 
                 // Replace any form values that correspond to form names.
-                for (key in json) {
+                for (var key in json) {
                     $(element).find('[name=\'' + key + '\']').val(json[key]);
                 }
             },
@@ -188,7 +177,7 @@ $(document).on('click', 'button[data-oc-toggle=\'upload\']', function() {
         $('#form-upload input[name=\'file\']').trigger('click');
 
         $('#form-upload input[name=\'file\']').on('change', function(e) {
-            if ((this.files[0].size / 1024) > $(element).attr('data-oc-size-max')) {
+            if ((this.files[0].size / 1024) > parseInt($(element).attr('data-oc-size-max'), 10)) {
                 alert($(element).attr('data-oc-size-error'));
 
                 $(this).val('');
@@ -218,8 +207,6 @@ $(document).on('click', 'button[data-oc-toggle=\'upload\']', function() {
                         $(element).button('reset');
                     },
                     success: function(json) {
-                        console.log(json);
-
                         if (json['error']) {
                             alert(json['error']);
                         }
