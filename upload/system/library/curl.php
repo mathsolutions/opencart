@@ -1,9 +1,9 @@
 <?php
-namespace Opencart\System\Library\Cart;
+namespace Opencart\System\Library;
 /**
  * Class Curl
  *
- * @package Opencart\System\Library\Cart
+ * @package Opencart\System\Library
  */
 class Curl {
 	/**
@@ -14,7 +14,7 @@ class Curl {
 		CURLOPT_HEADER         => false,
 		CURLOPT_CONNECTTIMEOUT => 30,
 		CURLOPT_TIMEOUT        => 30,
-		CURLOPT_POST           => true,
+		CURLOPT_POST           => true
 	];
 
 	/**
@@ -55,11 +55,11 @@ class Curl {
 		$status = curl_getinfo($curl, CURLINFO_HTTP_CODE);
 
 		if ($status == 200) {
-			$response_info = json_decode($response, true);
+			$response_info = json_decode((string)$response, true);
 		} else {
 			$response_info = [];
 		}
 
-		return $response_info;
+		return is_array($response_info) ? $response_info : [];
 	}
 }
