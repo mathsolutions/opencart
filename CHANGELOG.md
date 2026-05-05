@@ -72,10 +72,19 @@
 * Fixed: use Composer for autoloading in https://github.com/opencart/opencart/pull/15392
 * Fixed: Fix FA7 admin icon in https://github.com/opencart/opencart/pull/15394
 * Changed: Applied PHP CS Fixer in https://github.com/opencart/opencart/pull/15400
+* Fixed: Admin language key references, twig-template bugs, model bugs, controller bugs and remove dead module.add() in https://github.com/opencart/opencart/pull/15397
+* Changed: Update order.php in https://github.com/opencart/opencart/pull/15403
+* Fixed: Catalog and Extensions Fixex in https://github.com/opencart/opencart/pull/15404
+* Fixed: Some more cache fixes in https://github.com/opencart/opencart/pull/15406
+* Changed: tax_rate_id instead of tax_id in https://github.com/opencart/opencart/pull/15408
+* Fixed: More bug and security fixes in https://github.com/opencart/opencart/pull/15409
+* Fixed: Missing user's name in activity on checkout register in https://github.com/opencart/opencart/pull/15412
+* Fixed: Fix add variant to cart adding master instead in https://github.com/opencart/opencart/pull/15415
+* Fixed: More fixes of bugs and security issues in https://github.com/opencart/opencart/pull/15416
 
 ## [v4.1.0.3] (Release date: 24.03.2025)
 
-https://github.com/opencart/opencart/releases/tag/4.1.0.3  
+https://github.com/opencart/opencart/releases/tag/4.1.0.3
 
 #### Changes
 * More PHPDocs work by @TheCartpenter in https://github.com/opencart/opencart/pull/14700
@@ -130,7 +139,7 @@ https://github.com/opencart/opencart/releases/tag/4.0.2.0
 * Changed the route to use . instead of using | for compatibility with some payment gateways
 * Payment methods need to be updated:
 
-```		
+```
 $method_data = [];
 
 if ($status) {
