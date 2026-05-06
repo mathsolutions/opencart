@@ -1,6 +1,6 @@
 # OpenCart change log
 
-## [v4.x.x.x]
+## [v4.1.0.4]
 
 #### Changes
 
@@ -81,6 +81,11 @@
 * Fixed: Missing user's name in activity on checkout register in https://github.com/opencart/opencart/pull/15412
 * Fixed: Fix add variant to cart adding master instead in https://github.com/opencart/opencart/pull/15415
 * Fixed: More fixes of bugs and security issues in https://github.com/opencart/opencart/pull/15416
+* Fixed: Keep variant's code override on master update in https://github.com/opencart/opencart/pull/15418
+* Fixed: Fix admin product list wrong discount value in https://github.com/opencart/opencart/pull/15421
+* Fixed: Fix dashboard activities sort in https://github.com/opencart/opencart/pull/15422
+* Changed: Use ENT_COMPAT in query clean in https://github.com/opencart/opencart/pull/15423
+* Changed: Removing unused SSL context options in https://github.com/opencart/opencart/pull/15424
 
 ## [v4.1.0.3] (Release date: 24.03.2025)
 
